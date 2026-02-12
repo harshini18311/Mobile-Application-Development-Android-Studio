@@ -1,0 +1,75 @@
+package com.example.exe3;
+
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.exe3.R;
+
+public class MainActivity2 extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        TextView t1 = findViewById(R.id.textView);
+        TextView t2 = findViewById(R.id.textView2);
+        ImageView imageView = findViewById(R.id.imageView);
+
+        String name = getIntent().getStringExtra("Name");
+        String shape = getIntent().getStringExtra("Shape");
+
+        t1.setText("Name: " + name);
+        t2.setText("Shape: " + shape);
+
+        Bitmap bitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(6);
+
+        if (shape.equals("Rectangle")) {
+            canvas.drawRect(200, 200, 600, 500, paint);
+        }
+        else if (shape.equals("Circle")) {
+            canvas.drawCircle(400, 350, 150, paint);
+        }
+        else if (shape.equals("Triangle")) {
+            canvas.drawLine(400, 200, 200, 500, paint);
+            canvas.drawLine(200, 500, 600, 500, paint);
+            canvas.drawLine(600, 500, 400, 200, paint);
+        }
+        else if (shape.equals("House")) {
+            // Draw the house body (rectangle)
+            canvas.drawRect(250, 300, 550, 600, paint); // left, top, right, bottom
+
+            // Draw the roof (triangle)
+            canvas.drawLine(250, 300, 400, 150, paint); // left to top
+            canvas.drawLine(400, 150, 550, 300, paint); // top to right
+            canvas.drawLine(550, 300, 250, 300, paint); // right to left
+
+            // Optional: Draw a door (smaller rectangle)
+            canvas.drawRect(350, 450, 450, 600, paint);
+        }
+
+
+        imageView.setImageBitmap(bitmap);
+    }
+}
